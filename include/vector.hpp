@@ -48,21 +48,21 @@ struct vector
 
     void reserve(const std::size_t p_cap) noexcept
     {
-        T *new_data = (T *)malloc(p_cap * sizeof(T));
+        T *new_data = static_cast<T *>(std::malloc(p_cap * sizeof(T)));
         if (!new_data)
             std::terminate(); // no memory, your runtime is fked >3<
         for (std::size_t ctr = 0; ctr < len; ctr++)
         {
             new_data[ctr] = data[ctr];
         }
-        free(data);
+        std::free(data);
         data = new_data;
         cap = p_cap;
     };
 
     void clear() noexcept
     {
-        free(data);
+        std::free(data);
         data = nullptr;
         len = 0;
         cap = 0;
