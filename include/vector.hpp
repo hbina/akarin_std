@@ -10,16 +10,18 @@ struct quotient
 
 std::size_t calculate_growth(const std::size_t p_cap, const double p_rate)
 {
-    return static_cast<std::size_t>(
-        static_cast<double>(p_cap) * p_rate);
+    double old_cap = static_cast<double>(p_cap) + 1;
+    std::size_t new_size = static_cast<std::size_t>(old_cap * p_rate);
+    std::cout << "old_cap:" << old_cap << " p_rate:" << p_rate << " new_size:" << new_size << std::endl;
+    return new_size;
 };
 
 namespace akarin
 {
-template <typename T, std::size_t P = 1, std::size_t Q = 6>
+template <typename T, std::size_t P = 16, std::size_t Q = 10>
 struct vector
 {
-    static constexpr double growth_rate = P / Q;
+    static constexpr double growth_rate = static_cast<double>(P) / static_cast<double>(Q);
     constexpr vector() = default;
     constexpr vector(const vector &&p_vec)
     {

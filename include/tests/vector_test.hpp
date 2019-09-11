@@ -4,23 +4,30 @@
 
 #include "vector.hpp"
 
-akarin::vector<std::size_t> vec;
+constexpr std::size_t AKARIN_ITERATION = 10000;
 
 TEST_CASE("test akarin::vector push_back")
 {
-    for (std::size_t ctr = 0; ctr < 10000; ctr++)
+    akarin::vector<std::size_t> vec;
+    for (std::size_t ctr = 0; ctr < AKARIN_ITERATION; ctr++)
     {
         vec.push_back(ctr);
     }
-    CHECK(vec[0] == 4);
+    for (std::size_t ctr = 0; ctr < AKARIN_ITERATION; ctr++)
+    {
+        CHECK(vec[ctr] == ctr);
+    }
 };
 
 TEST_CASE("test akarin::vector custom growth rate")
 {
-    akarin::vector<std::size_t, 2, 1> vec2;
-    for (std::size_t ctr = 0; ctr < 10000; ctr++)
+    akarin::vector<std::size_t, 20, 1> vec;
+    for (std::size_t ctr = 0; ctr < AKARIN_ITERATION; ctr++)
     {
-        vec2.push_back(ctr);
+        vec.push_back(ctr);
     }
-    CHECK(vec2[0] == 4);
+    for (std::size_t ctr = 0; ctr < AKARIN_ITERATION; ctr++)
+    {
+        CHECK(vec[ctr] == ctr);
+    }
 };
