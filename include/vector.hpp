@@ -2,23 +2,18 @@
 
 #include <vector>
 
-template <
-    std::size_t p,
-    std::size_t q,
-    typename FP_type = double>
-struct quotient
-{
-    static constexpr FP_type value = (FP_type)p / q;
-};
-
 namespace akarin
 {
-template <typename T, std::size_t P = 16, std::size_t Q = 10>
+template <
+    typename T,
+    std::size_t P = 16,
+    std::size_t Q = 10>
 struct vector
 {
     using value_type = T;
     using size_type = std::size_t;
     static constexpr double growth_rate = static_cast<double>(P) / static_cast<double>(Q);
+    
     constexpr vector() = default;
     ~vector()
     {

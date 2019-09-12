@@ -1,16 +1,12 @@
 #pragma once
 
-#include "doctest/doctest.h"
-#include "vector.hpp"
-#include "allocator.hpp"
+#include "pool_allocator.hpp"
 
-#include <vector>
-
-namespace vector_test
+namespace pool_allocator_test
 {
 constexpr std::size_t AKARIN_ITERATION = 300;
 
-TEST_CASE("test akarin::vector push_back")
+TEST_CASE("test akarin::vector with akarin::pool_allocator push_back")
 {
     akarin::vector<std::size_t> vec;
     for (std::size_t ctr = 0; ctr < AKARIN_ITERATION; ctr++)
@@ -23,7 +19,7 @@ TEST_CASE("test akarin::vector push_back")
     }
 };
 
-TEST_CASE("test akarin::vector custom growth rate")
+TEST_CASE("test akarin::vector with akarin::pool_allocator custom growth rate")
 {
     akarin::vector<std::size_t, 20, 1> vec;
     for (std::size_t ctr = 0; ctr < AKARIN_ITERATION; ctr++)
@@ -36,26 +32,26 @@ TEST_CASE("test akarin::vector custom growth rate")
     }
 };
 
-TEST_CASE("test akarin::vector resize correctness")
-{
-    akarin::vector<std::size_t> vec;
-    for (std::size_t ctr = 0; ctr < AKARIN_ITERATION; ctr++)
-    {
-        vec.push_back(ctr);
-    }
-    CHECK(vec.size() == AKARIN_ITERATION);
-};
-
-TEST_CASE("test akarin::vector resize correctness")
+TEST_CASE("test akarin::vector with akarin::pool_allocator resize correctness")
 {
     std::vector<
         std::size_t,
-        akarin::allocator<std::size_t>>
+        akarin::pool_allocator<std::size_t>>
         vec;
     for (std::size_t ctr = 0; ctr < AKARIN_ITERATION; ctr++)
     {
         vec.push_back(ctr);
     }
     CHECK(vec.size() == AKARIN_ITERATION);
+
+    std::vector<
+        int,
+        akarin::pool_allocator<int>>
+        vec2;
+    for (int ctr = 0; ctr < AKARIN_ITERATION; ctr++)
+    {
+        vec2.push_back(ctr);
+    }
+    CHECK(vec2.size() == AKARIN_ITERATION);
 };
-}; // namespace vector_test
+}; // namespace pool_allocator_test
