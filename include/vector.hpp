@@ -2,7 +2,10 @@
 
 #include <vector>
 
-template <std::size_t p, std::size_t q, typename FP_type = double>
+template <
+    std::size_t p,
+    std::size_t q,
+    typename FP_type = double>
 struct quotient
 {
     static constexpr FP_type value = (FP_type)p / q;
