@@ -1,6 +1,11 @@
 # akarin_std
-My implementation of the standard library of C++.
+Some C++ templated data structures made for learning purposes.
 I will try not to use anything from the standard library with some exceptions.
+
+# What Have Been Implemented So Far
+
+1. vector
+2. monad
 
 # Exceptions
 
