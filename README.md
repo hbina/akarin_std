@@ -1,6 +1,5 @@
-# akarin_std
-Some C++ templated data structures made for learning purposes.
-I will try not to use anything from the standard library with some exceptions.
+# komuniSTL
+A C++ (non-standard) template library where you do NOT OWN anything!
 
 # What Have Been Implemented So Far
 
