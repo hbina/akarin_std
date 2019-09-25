@@ -70,7 +70,7 @@ struct vector
     {
         if (len == cap)
             grow();
-        data[len] = T(std::forward<Args>(args)...);
+        new (&data[len]) T(std::forward<Args>(args)...);
         ++len;
     };
 
