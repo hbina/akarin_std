@@ -24,12 +24,26 @@ struct vector
 
     constexpr vector() = default;
 
-    ~vector() = default;
+    ~vector()
+    {
+        std::free(data);
+    };
+
+    vector &operator=(const vector &p_vec)
+    {
+        if (this == &p_vec)
+            return *this; // no need to copy
+        clear();
+        p_vec.for_each([this](const std::size_t p_iter) {
+            push_back(p_iter);
+        });
+        return *this;
+    };
 
     void push_back(const T &&t)
     {
         if (len == cap)
-            resize(cap * growth_rate);
+            grow();
         data[len] = std::move(t);
         ++len;
     };
@@ -37,7 +51,7 @@ struct vector
     void push_back(const T &t)
     {
         if (len == cap)
-            resize(cap * growth_rate);
+            grow();
         data[len] = t;
         ++len;
     };
@@ -61,7 +75,7 @@ struct vector
     }
 
     template <typename F>
-    auto work(F f, const std::size_t p_index) const
+    auto work(const std::size_t p_index, const F &f) const
         -> typename std::result_of<decltype(f)(T)>::type
     {
         // TODO :: Make this a macro that prints out current file and line
@@ -71,7 +85,7 @@ struct vector
     }
 
     template <typename F>
-    auto work(const std::size_t p_index, F f)
+    auto work(const std::size_t p_index, const F &f)
         -> typename std::result_of<decltype(f)(T)>::type
     {
         // TODO :: Make this a macro that prints out current file and line
@@ -104,28 +118,38 @@ struct vector
         return len;
     }
 
+    constexpr void clear() noexcept
+    {
+        len = 0;
+    }
+
 private:
     T *data = nullptr;
     std::size_t len = 0u;
     std::size_t cap = 0u;
 
-    constexpr std::size_t calculate_growth(const std::size_t p_cap, const double p_rate)
+    constexpr std::size_t calculate_growth(const std::size_t p_cap)
     {
-        double old_cap = static_cast<double>(p_cap);
-        std::size_t new_size = static_cast<std::size_t>(old_cap * p_rate);
-        return new_size;
+        return static_cast<std::size_t>(
+                   static_cast<double>(p_cap) * growth_rate) +
+               N;
     };
 
-    void resize(const std::size_t p_new_size)
+    void grow()
     {
-        const std::size_t new_size = sizeof(T) * (p_new_size + N);
-        T *new_data = static_cast<T *>(std::malloc(sizeof(T) * new_size));
-        for (std::size_t iter = 0; iter < len; iter++)
+        std::size_t new_size = calculate_growth(cap);
+        resize(new_size);
+    };
+
+    void resize(const std::size_t p_new_cap)
+    {
+        T *new_data = static_cast<T *>(std::malloc(sizeof(T) * p_new_cap));
+        for (std::size_t iter = 0; iter < len && iter < p_new_cap; iter++)
         {
             new_data[iter] = data[iter];
         }
         std::free(data);
-        cap = new_size;
+        cap = p_new_cap;
         data = new_data;
     };
 

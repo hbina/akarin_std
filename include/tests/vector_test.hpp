@@ -43,7 +43,7 @@ TEST_CASE("test komunis::vector::capacity()")
     vec.push_back(1u);
     vec.push_back(1u);
     vec.push_back(1u);
-    CHECK(vec.capacity() == 32);
+    CHECK(vec.capacity() == 10);
 };
 
 TEST_CASE("test komunis::vector::push_back(const T&&)")
@@ -102,5 +102,34 @@ TEST_CASE("test komunis::vector::for_each(F f)")
     vec.for_each([&](const std::size_t &p_iter) {
         CHECK(p_iter == iter * 2);
         iter++;
+    });
+};
+
+TEST_CASE("test komunis::vector<komunis::vector>::for_each(F f)")
+{
+    komunis::vector<
+        komunis::vector<std::size_t>>
+        vec;
+    for (std::size_t iter = 0; iter < 10; iter++)
+    {
+        // TODO :: Provide an easier way to initialize multidimensional vectors?
+        komunis::vector<std::size_t> t_vec;
+        for (std::size_t iter = 0; iter < 10; iter++)
+        {
+            t_vec.push_back(iter);
+        }
+        vec.push_back(t_vec);
+    }
+    vec.for_each([](komunis::vector<std::size_t> &p_vec) {
+        p_vec.for_each([](std::size_t &p_iter) {
+            p_iter *= 4;
+        });
+    });
+    vec.for_each([](komunis::vector<std::size_t> &p_vec) {
+        std::size_t iter = 0;
+        p_vec.for_each([&](std::size_t &p_iter) {
+            CHECK(p_iter == iter * 4);
+            iter++;
+        });
     });
 };
