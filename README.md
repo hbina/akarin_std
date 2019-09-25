@@ -1,4 +1,4 @@
-![You do not want to own anything!](the_truth.png "Don't Own, Use Proxy")
+![Toshino Kyouko embraces the Utopia, why aren't you!?](the_truth.png "Don't Own, Use Proxy")
 
 # komuniSTL
 A C++ (non-standard) template library where you do NOT OWN anything!
