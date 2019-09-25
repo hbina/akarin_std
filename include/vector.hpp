@@ -45,7 +45,7 @@ struct vector
     template <typename F>
     void for_each(F f)
     {
-        for (std::size_t iter = 0; iter < 0; iter++)
+        for (std::size_t iter = 0; iter < len; iter++)
         {
             f(data[iter]);
         }
@@ -54,7 +54,7 @@ struct vector
     template <typename F>
     void for_each(F f) const
     {
-        for (std::size_t iter = 0; iter < 0; iter++)
+        for (std::size_t iter = 0; iter < len; iter++)
         {
             f(data[iter]);
         }
