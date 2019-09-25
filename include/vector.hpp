@@ -2,16 +2,7 @@
 
 #include <vector>
 
-template <
-    std::size_t p,
-    std::size_t q,
-    typename FP_type = double>
-struct quotient
-{
-    static constexpr FP_type value = (FP_type)p / q;
-};
-
-namespace akarin
+namespace komunis
 {
 template <typename T, std::size_t P = 16, std::size_t Q = 10>
 struct vector
@@ -103,4 +94,4 @@ private:
         return new_size + 1;
     };
 };
-}; // namespace akarin
+}; // namespace komunis

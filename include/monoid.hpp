@@ -1,6 +1,6 @@
 #pragma once
 
-namespace akarin
+namespace komunis
 {
 template <
     typename T,
@@ -27,4 +27,4 @@ public:
         return member_value;
     }
 };
-}; // namespace akarin
+}; // namespace komunis
