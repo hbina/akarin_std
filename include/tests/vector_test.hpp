@@ -6,53 +6,74 @@
 
 #include <vector>
 
-constexpr std::size_t komunis_ITERATION = 300;
-
-TEST_CASE("test komunis::vector push_back")
+TEST_CASE("test komunis::vector::empty()")
 {
-    komunis::vector<std::size_t> vec;
-    for (std::size_t ctr = 0; ctr < komunis_ITERATION; ctr++)
-    {
-        vec.push_back(ctr);
-    }
-    for (std::size_t ctr2 = 0; ctr2 < komunis_ITERATION; ctr2++)
-    {
-        CHECK(vec[ctr2] == ctr2);
-    }
-};
-
-TEST_CASE("test komunis::vector custom growth rate")
-{
-    komunis::vector<std::size_t, 20, 1> vec;
-    for (std::size_t ctr = 0; ctr < komunis_ITERATION; ctr++)
-    {
-        vec.push_back(ctr);
-    }
-    for (std::size_t ctr = 0; ctr < komunis_ITERATION; ctr++)
-    {
-        CHECK(vec[ctr] == ctr);
-    }
-};
-
-TEST_CASE("test komunis::vector resize correctness")
-{
-    komunis::vector<std::size_t> vec;
-    for (std::size_t ctr = 0; ctr < komunis_ITERATION; ctr++)
-    {
-        vec.push_back(ctr);
-    }
-    CHECK(vec.size() == komunis_ITERATION);
-};
-
-TEST_CASE("test komunis::vector resize correctness")
-{
-    std::vector<
-        std::size_t,
-        komunis::allocator<std::size_t>>
+    komunis::vector<
+        std::size_t>
         vec;
-    for (std::size_t ctr = 0; ctr < komunis_ITERATION; ctr++)
+    CHECK(vec.empty() == true);
+    vec.push_back(1u);
+    CHECK(vec.empty() == false);
+};
+
+TEST_CASE("test komunis::vector::size()")
+{
+    komunis::vector<
+        std::size_t>
+        vec;
+    vec.push_back(1u);
+    vec.push_back(1u);
+    vec.push_back(1u);
+    vec.push_back(1u);
+    vec.push_back(1u);
+    CHECK(vec.size() == 5);
+};
+
+TEST_CASE("test komunis::vector::capacity()")
+{
+    komunis::vector<
+        std::size_t>
+        vec;
+    vec.push_back(1u);
+    vec.push_back(1u);
+    vec.push_back(1u);
+    vec.push_back(1u);
+    vec.push_back(1u);
+    vec.push_back(1u);
+    vec.push_back(1u);
+    vec.push_back(1u);
+    vec.push_back(1u);
+    CHECK(vec.capacity() == 32);
+};
+
+TEST_CASE("test komunis::vector::push_back(const T&&)")
+{
+    komunis::vector<
+        std::size_t>
+        vec;
+    for (std::size_t iter = 0; iter < 10; iter++)
     {
-        vec.push_back(ctr);
+        vec.push_back(iter * 2);
     }
-    CHECK(vec.size() == komunis_ITERATION);
+    for (std::size_t iter = 0; iter < 10; iter++)
+    {
+        CHECK(vec[iter] == iter * 2);
+    }
+};
+
+TEST_CASE("test komunis::vector::work(F f, const std::size_t)")
+{
+    komunis::vector<
+        std::size_t>
+        vec;
+    for (std::size_t iter = 0; iter < 10; iter++)
+    {
+        vec.push_back(iter * 2);
+    }
+    for (std::size_t iter = 0; iter < 10; iter++)
+    {
+        CHECK(vec.work(iter, [](const std::size_t p_iter) {
+            return p_iter;
+        }) == iter * 2);
+    }
 };
