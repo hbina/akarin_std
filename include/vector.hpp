@@ -83,7 +83,7 @@ struct vector
     };
 
     template <typename F>
-    void for_each(F f)
+    void for_each(const F &f)
     {
         for (std::size_t iter = 0; iter < len; iter++)
         {
@@ -92,7 +92,7 @@ struct vector
     }
 
     template <typename F>
-    void for_each(F f) const
+    void for_each(const F &f) const
     {
         for (std::size_t iter = 0; iter < len; iter++)
         {
