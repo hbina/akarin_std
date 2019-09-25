@@ -53,11 +53,19 @@ TEST_CASE("test komunis::vector::push_back(const T&&)")
         vec;
     for (std::size_t iter = 0; iter < 10; iter++)
     {
-        vec.push_back(iter * 2);
+        vec.push_back(iter);
     }
     for (std::size_t iter = 0; iter < 10; iter++)
     {
-        CHECK(vec[iter] == iter * 2);
+        vec.apply(iter, [](std::size_t &p_iter) -> void {
+            p_iter *= 2;
+        });
+    }
+    for (std::size_t iter = 0; iter < 10; iter++)
+    {
+        CHECK(vec.work(iter, [](const std::size_t p_iter) {
+            return p_iter;
+        }) == iter * 2);
     }
 };
 
@@ -69,11 +77,5 @@ TEST_CASE("test komunis::vector::work(F f, const std::size_t)")
     for (std::size_t iter = 0; iter < 10; iter++)
     {
         vec.push_back(iter * 2);
-    }
-    for (std::size_t iter = 0; iter < 10; iter++)
-    {
-        CHECK(vec.work(iter, [](const std::size_t p_iter) {
-            return p_iter;
-        }) == iter * 2);
     }
 };

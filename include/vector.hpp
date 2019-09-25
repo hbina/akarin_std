@@ -59,17 +59,12 @@ struct vector
         ++len;
     };
 
-    const proxy operator[](const std::size_t p_index) const
+    void push_back(const T &t)
     {
-        // TODO :: investigate if giving proxy the `const` qualifer still allow proxies to modify its content.
-        proxy local(this, p_index);
-        return local;
-    };
-
-    proxy operator[](const std::size_t p_index)
-    {
-        proxy local(this, p_index);
-        return local;
+        if (len == cap)
+            resize(cap * growth_rate);
+        data[len] = t;
+        ++len;
     };
 
     template <typename F>
