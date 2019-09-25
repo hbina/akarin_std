@@ -18,31 +18,6 @@ template <
     std::size_t N = 4>
 struct vector
 {
-    // Typedefs
-    using value_type = T;
-    using size_type = std::size_t;
-
-    // NOTE :: deprecated
-    // If we are going to support proxies, there is still this
-    // problem of the original vector getting deleted while
-    // someone is holding a reference to an element inside of it.
-    // As is true to the komunis philosophy, you don't own anything,
-    // even the element inside of it >:3
-    struct proxy
-    {
-        const komunis::vector<T, Q, N> *const origin;
-        const std::size_t index;
-        proxy(
-            const komunis::vector<T, Q, N> *const p_origin,
-            const std::size_t p_index)
-            : origin(p_origin),
-              index(p_index){};
-
-        T operator==(const T &p_right) const
-        {
-            return origin->data[index] == p_right;
-        };
-    };
 
     // Constexprs
     static constexpr double growth_rate = static_cast<double>(Q::p) / static_cast<double>(Q::q);
