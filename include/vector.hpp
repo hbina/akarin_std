@@ -24,6 +24,22 @@ struct vector
 
     constexpr vector() = default;
 
+    constexpr vector(const vector &p_vec)
+    {
+        this->clear();
+        p_vec.for_each([this](const T &p_iter) {
+            this->push_back(p_iter);
+        });
+    };
+
+    constexpr vector(const vector &&p_vec)
+        : len(p_vec.len),
+          cap(p_vec.cap)
+    {
+        std::free(data);
+        data = std::move(p_vec.data);
+    };
+
     ~vector()
     {
         std::free(data);
@@ -33,18 +49,28 @@ struct vector
     {
         if (this == &p_vec)
             return *this; // no need to copy
-        clear();
-        p_vec.for_each([this](const std::size_t p_iter) {
-            push_back(p_iter);
+        this->clear();
+        p_vec.for_each([this](const T &p_iter) {
+            this->push_back(p_iter);
         });
         return *this;
     };
 
-    void push_back(const T &&t)
+    vector &operator=(const vector &&p_vec)
+    {
+        if (this == &p_vec)
+            return *this; // no need to copy
+        std::free(data);
+        data = std::move(p_vec.data);
+        return *this;
+    };
+
+    template <typename... Args>
+    void push_back(Args &&... args)
     {
         if (len == cap)
             grow();
-        data[len] = std::move(t);
+        data[len] = T(std::forward<Args>(args)...);
         ++len;
     };
 

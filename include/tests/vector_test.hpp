@@ -4,7 +4,7 @@
 #include "vector.hpp"
 #include "allocator.hpp"
 
-#include <vector>
+#include <iostream>
 
 TEST_CASE("test komunis::vector::empty()")
 {
@@ -86,7 +86,7 @@ TEST_CASE("test komunis::vector::apply(F f, const std::size_t)")
     }
 };
 
-TEST_CASE("test komunis::vector::for_each(F f)")
+TEST_CASE("test komunis::vector::for_each(const F& f)")
 {
     komunis::vector<
         std::size_t>
@@ -105,7 +105,7 @@ TEST_CASE("test komunis::vector::for_each(F f)")
     });
 };
 
-TEST_CASE("test komunis::vector<komunis::vector>::for_each(F f)")
+TEST_CASE("test komunis::vector<komunis::vector>::for_each(const F& f)")
 {
     komunis::vector<
         komunis::vector<std::size_t>>
@@ -118,17 +118,22 @@ TEST_CASE("test komunis::vector<komunis::vector>::for_each(F f)")
         {
             t_vec.push_back(iter);
         }
+        std::size_t counter = 0;
+        t_vec.for_each([&](const std::size_t p_iter) {
+            CHECK(p_iter == counter);
+            ++counter;
+        });
         vec.push_back(t_vec);
     }
     vec.for_each([](komunis::vector<std::size_t> &p_vec) {
         p_vec.for_each([](std::size_t &p_iter) {
-            p_iter *= 4;
+            p_iter *= 5;
         });
     });
     vec.for_each([](komunis::vector<std::size_t> &p_vec) {
         std::size_t iter = 0;
         p_vec.for_each([&](std::size_t &p_iter) {
-            CHECK(p_iter == iter * 4);
+            CHECK(p_iter == iter * 5);
             iter++;
         });
     });
