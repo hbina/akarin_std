@@ -28,12 +28,14 @@ struct vector
         });
     };
 
-    constexpr vector(const vector &&p_vec)
-        : len(p_vec.len),
+    constexpr explicit vector(const vector &&p_vec)
+        : data(p_vec.data),
+          len(p_vec.len),
           cap(p_vec.cap)
     {
-        std::free(data);
-        data = std::move(p_vec.data);
+        p_vec.data = nullptr;
+        p_vec.len = 0;
+        p_vec.cap = 0;
     };
 
     ~vector()
@@ -57,7 +59,12 @@ struct vector
         if (this == &p_vec)
             return *this; // no need to copy
         std::free(data);
-        data = std::move(p_vec.data);
+        data = p_vec.data;
+        len = p_vec.len;
+        cap = p_vec.cap;
+        p_vec.data = nullptr;
+        p_vec.len = 0;
+        p_vec.cap = 0;
         return *this;
     };
 
