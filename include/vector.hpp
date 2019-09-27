@@ -28,7 +28,7 @@ struct vector
         });
     };
 
-    constexpr explicit vector(const vector &&p_vec)
+    constexpr explicit vector(vector &&p_vec)
         : data(p_vec.data),
           len(p_vec.len),
           cap(p_vec.cap)
@@ -54,7 +54,7 @@ struct vector
         return *this;
     };
 
-    vector &operator=(const vector &&p_vec)
+    vector &operator=(vector &&p_vec)
     {
         if (this == &p_vec)
             return *this; // no need to copy
@@ -187,7 +187,7 @@ private:
         T *new_data = static_cast<T *>(std::malloc(sizeof(T) * p_new_cap));
         for (std::size_t iter = 0; iter < len && iter < p_new_cap; iter++)
         {
-            new_data[iter] = data[iter];
+            new_data[iter] = std::move(data[iter]);
         }
         std::free(data);
         cap = p_new_cap;
