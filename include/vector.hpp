@@ -129,6 +129,17 @@ struct vector
         f(data[p_index]);
     }
 
+    template <typename F>
+    vector<std::size_t> filter(const F &f) noexcept
+    {
+        vector iterator;
+        for_each([&](const T &p_iter) {
+            if (f(p_iter))
+                iterator.push_back(p_iter);
+        });
+        return iterator;
+    }
+
     constexpr bool empty() const
     {
         return len == 0;
@@ -164,10 +175,10 @@ private:
     void grow()
     {
         std::size_t new_size = calculate_growth(cap);
-        resize(new_size);
+        reserve(new_size);
     };
 
-    void resize(const std::size_t p_new_cap)
+    void reserve(const std::size_t p_new_cap)
     {
         T *new_data = static_cast<T *>(std::malloc(sizeof(T) * p_new_cap));
         for (std::size_t iter = 0; iter < len && iter < p_new_cap; iter++)
@@ -181,7 +192,7 @@ private:
 
     void shrink()
     {
-        resize(len);
+        reserve(len);
     };
 };
 }; // namespace komunis

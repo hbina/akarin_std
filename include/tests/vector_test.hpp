@@ -138,3 +138,20 @@ TEST_CASE("test komunis::vector<komunis::vector>::for_each(const F& f)")
         });
     });
 };
+
+TEST_CASE("test komunis::vector::filter(const F& f)")
+{
+    komunis::vector<
+        std::size_t>
+        vec;
+    for (std::size_t iter = 0; iter < 10; iter++)
+    {
+        vec.push_back(iter);
+    }
+    vec.filter([](const std::size_t p_iter) -> bool {
+           return p_iter % 2;
+       })
+        .for_each([](const std::size_t p_iter) {
+            CHECK(p_iter % 2);
+        });
+};
