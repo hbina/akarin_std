@@ -18,10 +18,6 @@ template <
     std::size_t N = 4>
 struct vector
 {
-
-    // Constexprs
-    static constexpr double growth_rate = static_cast<double>(Q::p) / static_cast<double>(Q::q);
-
     constexpr vector() = default;
 
     constexpr vector(const vector &p_vec)
@@ -165,6 +161,7 @@ private:
     std::size_t len = 0u;
     std::size_t cap = 0u;
 
+    static constexpr double growth_rate = static_cast<double>(Q::p) / static_cast<double>(Q::q);
     constexpr std::size_t calculate_growth(const std::size_t p_cap)
     {
         return static_cast<std::size_t>(
