@@ -41,7 +41,7 @@ struct vector
         std::free(data);
     };
 
-    vector &operator=(const vector &p_vec)
+    vector &operator=(const vector &p_vec) noexcept
     {
         if (this == &p_vec)
             return *this; // no need to copy
@@ -52,7 +52,7 @@ struct vector
         return *this;
     };
 
-    vector &operator=(const vector &&p_vec)
+    vector &operator=(const vector &&p_vec) noexcept
     {
         if (this == &p_vec)
             return *this; // no need to copy
@@ -62,7 +62,7 @@ struct vector
     };
 
     template <typename... Args>
-    void push_back(Args &&... args)
+    void push_back(Args &&... args) noexcept
     {
         if (len == cap)
             grow();
@@ -70,7 +70,7 @@ struct vector
         ++len;
     };
 
-    void push_back(const T &t)
+    void push_back(const T &t) noexcept
     {
         if (len == cap)
             grow();
@@ -79,7 +79,7 @@ struct vector
     };
 
     template <typename F>
-    void for_each(const F &f)
+    void for_each(const F &f) noexcept
     {
         for (std::size_t iter = 0; iter < len; iter++)
         {
@@ -88,7 +88,7 @@ struct vector
     }
 
     template <typename F>
-    void for_each(const F &f) const
+    void for_each(const F &f) const noexcept
     {
         for (std::size_t iter = 0; iter < len; iter++)
         {
@@ -97,7 +97,7 @@ struct vector
     }
 
     template <typename F>
-    auto work(const std::size_t p_index, const F &f) const
+    auto work(const std::size_t p_index, const F &f) const noexcept
         -> typename std::result_of<decltype(f)(T)>::type
     {
         // TODO :: Make this a macro that prints out current file and line
@@ -107,7 +107,7 @@ struct vector
     }
 
     template <typename F>
-    auto work(const std::size_t p_index, const F &f)
+    auto work(const std::size_t p_index, const F &f) noexcept
         -> typename std::result_of<decltype(f)(T)>::type
     {
         // TODO :: Make this a macro that prints out current file and line
@@ -117,7 +117,7 @@ struct vector
     }
 
     template <typename F>
-    void apply(const std::size_t p_index, F f)
+    void apply(const std::size_t p_index, F f) noexcept
     {
         // TODO :: Make this a macro that prints out current file and line
         if (p_index > len)
@@ -136,17 +136,17 @@ struct vector
         return iterator;
     }
 
-    constexpr bool empty() const
+    constexpr bool empty() const noexcept
     {
         return len == 0;
     };
 
-    constexpr std::size_t capacity() const
+    constexpr std::size_t capacity() const noexcept
     {
         return cap;
     };
 
-    constexpr std::size_t size() const
+    constexpr std::size_t size() const noexcept
     {
         return len;
     }
@@ -169,13 +169,13 @@ private:
                N;
     };
 
-    void grow()
+    void grow() noexcept
     {
         std::size_t new_size = calculate_growth(cap);
         reserve(new_size);
     };
 
-    void reserve(const std::size_t p_new_cap)
+    void reserve(const std::size_t p_new_cap) noexcept
     {
         T *new_data = static_cast<T *>(std::malloc(sizeof(T) * p_new_cap));
         for (std::size_t iter = 0; iter < len && iter < p_new_cap; iter++)
@@ -187,7 +187,7 @@ private:
         data = new_data;
     };
 
-    void shrink()
+    void shrink() noexcept
     {
         reserve(len);
     };
