@@ -2,6 +2,7 @@
 
 #include <cstddef>
 #include <type_traits>
+#include <vector>
 
 namespace komunis
 {

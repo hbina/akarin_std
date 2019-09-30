@@ -1,4 +1,4 @@
-![Toshino Kyouko embraces the Utopia, why aren't you!?](the_truth.png "Don't Own, Use Proxy")
+![Toshino Kyouko embraced the Utopia, why aren't you!?](the_truth.png "Stop owning variables!")
 
 # komuniSTL
 A C++ (non-standard) template library where you do NOT OWN anything!
@@ -15,10 +15,3 @@ At best, you will have to copy the value and give it back to the vector at some 
 
 1. vector
 2. monad
-
-# Exceptions
-
-I will list stuff that I did use here:
-
-1. `std::size_t`
-2. `std::iostream`
