@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <type_traits>
 #include <vector>
@@ -13,6 +14,7 @@ struct quotient
     static constexpr std::size_t q = Q;
 };
 
+// TODO :: Provide template arguments to allocators.
 template <
     typename T,
     typename Q = quotient<16, 10>,
@@ -24,24 +26,12 @@ struct vector
     constexpr vector(const vector &p_vec)
     {
         this->clear();
-        p_vec.for_each([this](const T &p_iter) {
-            this->push_back(p_iter);
-        });
+        data = p_vec.data;
     };
 
-    constexpr explicit vector(vector &&p_vec)
-        : data(p_vec.data),
-          len(p_vec.len),
-          cap(p_vec.cap)
+    constexpr vector(vector &&p_vec)
     {
-        p_vec.data = nullptr;
-        p_vec.len = 0;
-        p_vec.cap = 0;
-    };
-
-    ~vector()
-    {
-        std::free(data);
+        data = std::move(p_vec.data);
     };
 
     vector &operator=(const vector &p_vec)
@@ -49,9 +39,7 @@ struct vector
         if (this == &p_vec)
             return *this; // no need to copy
         this->clear();
-        p_vec.for_each([this](const T &p_iter) {
-            this->push_back(p_iter);
-        });
+        data = p_vec.data;
         return *this;
     };
 
@@ -59,76 +47,65 @@ struct vector
     {
         if (this == &p_vec)
             return *this; // no need to copy
-        std::free(data);
-        data = p_vec.data;
-        len = p_vec.len;
-        cap = p_vec.cap;
-        p_vec.data = nullptr;
-        p_vec.len = 0;
-        p_vec.cap = 0;
+        data = std::move(p_vec.data);
         return *this;
     };
 
     template <typename... Args>
     void push_back(Args &&... args)
     {
-        if (len == cap)
+        if (data.size() == data.capacity())
             grow();
-        new (&data[len]) T(std::forward<Args>(args)...);
-        ++len;
+        data.push_back(args...);
     };
 
     void push_back(const T &t)
     {
-        if (len == cap)
+        if (data.size() == data.capacity())
             grow();
-        data[len] = t;
-        ++len;
+        data.push_back(t);
     };
 
     template <typename F>
     void for_each(const F &f)
     {
-        for (std::size_t iter = 0; iter < len; iter++)
+        for (T &elem : data)
         {
-            f(data[iter]);
+            f(elem);
         }
     }
 
     template <typename F>
     void for_each(const F &f) const
     {
-        for (std::size_t iter = 0; iter < len; iter++)
-        {
-            f(data[iter]);
-        }
+        std::for_each(data.cbegin(), data.cend(), f);
     }
 
     template <typename F>
-    auto work(const std::size_t p_index, const F &f) const
+    auto get_f(const std::size_t p_index, const F &f) const
         -> typename std::result_of<decltype(f)(T)>::type
     {
         // TODO :: Make this a macro that prints out current file and line
-        if (p_index > len)
+        if (p_index >= data.size())
             std::terminate();
         return f(data[p_index]);
     }
 
     template <typename F>
-    auto work(const std::size_t p_index, const F &f)
+    auto get_f(const std::size_t p_index, const F &f)
         -> typename std::result_of<decltype(f)(T)>::type
     {
         // TODO :: Make this a macro that prints out current file and line
-        if (p_index > len)
+        if (p_index >= data.size())
             std::terminate();
         return f(data[p_index]);
     }
 
     template <typename F>
-    void apply(const std::size_t p_index, F f)
+    void apply_f(const std::size_t p_index, F f)
     {
         // TODO :: Make this a macro that prints out current file and line
-        if (p_index > len)
+        if (p_index > data.size())
             std::terminate();
         f(data[p_index]);
     }
@@ -146,28 +123,26 @@ struct vector
 
     constexpr bool empty() const
     {
-        return len == 0;
+        return data.empty();
     };
 
     constexpr std::size_t capacity() const
     {
-        return cap;
+        return data.capacity();
     };
 
     constexpr std::size_t size() const
     {
-        return len;
+        return data.size();
     }
 
     constexpr void clear() noexcept
     {
-        len = 0;
+        data.clear();
     }
 
 private:
-    T *data = nullptr;
-    std::size_t len = 0u;
-    std::size_t cap = 0u;
+    std::vector<T> data;
 
     static constexpr double growth_rate = static_cast<double>(Q::p) / static_cast<double>(Q::q);
     constexpr std::size_t calculate_growth(const std::size_t p_cap)
@@ -179,25 +154,18 @@ private:
 
     void grow()
     {
-        std::size_t new_size = calculate_growth(cap);
+        std::size_t new_size = calculate_growth(data.capacity());
         reserve(new_size);
     };
 
     void reserve(const std::size_t p_new_cap)
     {
-        T *new_data = static_cast<T *>(std::malloc(sizeof(T) * p_new_cap));
-        for (std::size_t iter = 0; iter < len && iter < p_new_cap; iter++)
-        {
-            new_data[iter] = std::move(data[iter]);
-        }
-        std::free(data);
-        cap = p_new_cap;
-        data = new_data;
+        data.reserve(p_new_cap);
     };
 
     void shrink()
     {
-        reserve(len);
+        data.shrink_to_fit();
     };
 };
 }; // namespace komunis
