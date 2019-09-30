@@ -141,6 +141,32 @@ struct vector
         data.clear();
     }
 
+    // Helpers for use with std::algorithm's
+    // TODO :: Should this API exists?
+    auto cbegin() const noexcept
+        -> decltype(std::declval<std::vector<T>>().cbegin())
+    {
+        return data.cbegin();
+    }
+
+    auto cend() const noexcept
+        -> decltype(std::declval<std::vector<T>>().cend())
+    {
+        return data.cend();
+    }
+
+    auto begin() const noexcept
+        -> decltype(std::declval<std::vector<T>>().begin())
+    {
+        return data.begin();
+    }
+
+    auto end() const noexcept
+        -> decltype(std::declval<std::vector<T>>().end())
+    {
+        return data.end();
+    }
+
 private:
     std::vector<T> data;
 
