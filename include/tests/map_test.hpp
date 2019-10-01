@@ -55,9 +55,7 @@ TEST_CASE("test komunis::map::apply_f")
     }
     for (std::size_t iter = 0; iter < 10; iter++)
     {
-        CHECK(map.get_f(iter, [](const std::size_t p_iter) {
-            return p_iter;
-        }) == iter * 2);
+        CHECK(map[iter] == iter * 2);
     }
 };
 
