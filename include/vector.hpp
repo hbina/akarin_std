@@ -168,7 +168,7 @@ struct vector
     }
 
 private:
-    std::vector<T> data;
+    typename std::vector<T> data;
 
     static constexpr double growth_rate = static_cast<double>(Q::p) / static_cast<double>(Q::q);
     constexpr std::size_t calculate_growth(const std::size_t p_cap)
