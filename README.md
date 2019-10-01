@@ -13,5 +13,6 @@ At best, you will have to copy the value and give it back to the vector at some 
 
 # What Have Been Implemented So Far
 
-1. vector
-2. monad
+1. `komunis::vector`
+2. `komunis::monad`
+3. `komunis::map`
