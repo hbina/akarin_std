@@ -3,3 +3,4 @@
 #include "tests/vector_test.hpp"
 #include "tests/monoid_test.hpp"
 #include "tests/map_test.hpp"
+#include "tests/job_system_test.hpp"

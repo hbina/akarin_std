@@ -69,7 +69,7 @@ struct map
         return iterator;
     };
 
-    V operator[](const K &key) const noexcept
+    V get_copy(const K &key) const noexcept
     {
         return data.at(key);
     }

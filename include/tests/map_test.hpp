@@ -55,7 +55,7 @@ TEST_CASE("test komunis::map::apply_f")
     }
     for (std::size_t iter = 0; iter < 10; iter++)
     {
-        CHECK(map[iter] == iter * 2);
+        CHECK(map.get_copy(iter) == iter * 2);
     }
 };
 
@@ -74,7 +74,7 @@ TEST_CASE("test komunis::map::for_each(const F& f)")
     });
     for (std::size_t iter = 0; iter < 10; iter++)
     {
-        CHECK(map[iter] == iter * 2);
+        CHECK(map.get_copy(iter) == iter * 2);
     };
 };
 
@@ -96,19 +96,19 @@ TEST_CASE("test komunis::map<komunis::map>::for_each(const F& f)")
         }
         for (std::size_t iter = 0; iter < 10; iter++)
         {
-            CHECK(t_map[iter] == iter);
+            CHECK(t_map.get_copy(iter) == iter);
         };
         map.emplace(iter, t_map);
     }
-    map.for_each([](komunis::map<std::size_t, size_t> &p_vec) {
-        p_vec.for_each([](std::size_t &p_iter) {
+    map.for_each([](komunis::map<std::size_t, size_t> &p_map) {
+        p_map.for_each([](std::size_t &p_iter) {
             p_iter *= 5;
         });
     });
-    map.for_each([](const komunis::map<std::size_t, size_t> &p_vec) {
+    map.for_each([](const komunis::map<std::size_t, size_t> &p_map) {
         for (std::size_t iter = 0; iter < 10; iter++)
         {
-            CHECK(p_vec[iter] == iter * 5);
+            CHECK(p_map.get_copy(iter) == iter * 5);
         };
     });
 };
@@ -144,10 +144,10 @@ TEST_CASE("test komunis::map move constructor")
     komunis::map<
         std::size_t,
         std::size_t>
-        vec2(std::move(map));
+        map2(std::move(map));
     for (std::size_t iter = 0; iter < 10; iter++)
     {
-        CHECK(vec2[iter] == iter);
+        CHECK(map2.get_copy(iter) == iter);
     };
     CHECK(map.size() == 0);
 };
@@ -165,10 +165,10 @@ TEST_CASE("test komunis::map move assignment")
     komunis::map<
         std::size_t,
         std::size_t>
-        vec2 = std::move(map);
+        map2 = std::move(map);
     for (std::size_t iter = 0; iter < 10; iter++)
     {
-        CHECK(vec2[iter] == iter);
+        CHECK(map2.get_copy(iter) == iter);
     };
     CHECK(map.size() == 0);
 };
