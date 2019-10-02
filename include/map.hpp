@@ -11,36 +11,6 @@ template <
     typename V>
 struct map
 {
-    constexpr map() = default;
-
-    constexpr map(const map &p_vec)
-    {
-        this->clear();
-        data = p_vec.data;
-    };
-
-    constexpr map(map &&p_vec)
-    {
-        data = std::move(p_vec.data);
-    };
-
-    map &operator=(const map &p_vec)
-    {
-        if (this == &p_vec)
-            return *this; // no need to copy
-        this->clear();
-        data = p_vec.data;
-        return *this;
-    };
-
-    map &operator=(map &&p_vec)
-    {
-        if (this == &p_vec)
-            return *this; // no need to copy
-        data = std::move(p_vec.data);
-        return *this;
-    };
-
     template <typename... Args>
     void emplace(Args &&... args)
     {

@@ -21,36 +21,6 @@ template <
     std::size_t N = 4>
 struct vector
 {
-    constexpr vector() = default;
-
-    constexpr vector(const vector &p_vec)
-    {
-        this->clear();
-        data = p_vec.data;
-    };
-
-    constexpr vector(vector &&p_vec)
-    {
-        data = std::move(p_vec.data);
-    };
-
-    vector &operator=(const vector &p_vec)
-    {
-        if (this == &p_vec)
-            return *this; // no need to copy
-        this->clear();
-        data = p_vec.data;
-        return *this;
-    };
-
-    vector &operator=(vector &&p_vec)
-    {
-        if (this == &p_vec)
-            return *this; // no need to copy
-        data = std::move(p_vec.data);
-        return *this;
-    };
-
     template <typename... Args>
     void push_back(Args &&... args)
     {
