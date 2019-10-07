@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <iostream>
 
-namespace komunis
+namespace ktl
 {
 template <
     typename K,
@@ -122,4 +122,4 @@ struct map
 private:
     typename std::unordered_map<K, V> data;
 };
-}; // namespace komunis
+}; // namespace ktl

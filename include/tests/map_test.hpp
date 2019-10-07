@@ -5,9 +5,9 @@
 
 #include <iostream>
 
-TEST_CASE("test komunis::map::size")
+TEST_CASE("test ktl::map::size")
 {
-    komunis::map<
+    ktl::map<
         std::size_t,
         std::size_t>
         map;
@@ -19,9 +19,9 @@ TEST_CASE("test komunis::map::size")
     CHECK(map.size() == 5);
 };
 
-TEST_CASE("test komunis::map::emplace")
+TEST_CASE("test ktl::map::emplace")
 {
-    komunis::map<
+    ktl::map<
         std::size_t,
         std::size_t>
         map;
@@ -37,9 +37,9 @@ TEST_CASE("test komunis::map::emplace")
     }
 };
 
-TEST_CASE("test komunis::map::apply_f")
+TEST_CASE("test ktl::map::apply_f")
 {
-    komunis::map<
+    ktl::map<
         std::size_t,
         std::size_t>
         map;
@@ -61,9 +61,9 @@ TEST_CASE("test komunis::map::apply_f")
     }
 };
 
-TEST_CASE("test komunis::map::for_each(const F& f)")
+TEST_CASE("test ktl::map::for_each(const F& f)")
 {
-    komunis::map<
+    ktl::map<
         std::size_t,
         std::size_t>
         map;
@@ -80,18 +80,18 @@ TEST_CASE("test komunis::map::for_each(const F& f)")
     };
 };
 
-TEST_CASE("test komunis::map<komunis::map>::for_each(const F& f)")
+TEST_CASE("test ktl::map<ktl::map>::for_each(const F& f)")
 {
-    komunis::map<
+    ktl::map<
         std::size_t,
-        komunis::map<
+        ktl::map<
             std::size_t,
             std::size_t>>
         map;
     for (std::size_t iter = 0; iter < 10; iter++)
     {
         // TODO :: Provide an easier way to initialize multidimensional vectors?
-        komunis::map<std::size_t, std::size_t> t_map;
+        ktl::map<std::size_t, std::size_t> t_map;
         for (std::size_t iter = 0; iter < 10; iter++)
         {
             t_map.emplace(iter, iter);
@@ -102,12 +102,12 @@ TEST_CASE("test komunis::map<komunis::map>::for_each(const F& f)")
         };
         map.emplace(iter, t_map);
     }
-    map.for_each([](komunis::map<std::size_t, size_t> &p_vec) {
+    map.for_each([](ktl::map<std::size_t, size_t> &p_vec) {
         p_vec.for_each([](std::size_t &p_iter) {
             p_iter *= 5;
         });
     });
-    map.for_each([](const komunis::map<std::size_t, size_t> &p_vec) {
+    map.for_each([](const ktl::map<std::size_t, size_t> &p_vec) {
         for (std::size_t iter = 0; iter < 10; iter++)
         {
             CHECK(p_vec[iter] == iter * 5);
@@ -115,9 +115,9 @@ TEST_CASE("test komunis::map<komunis::map>::for_each(const F& f)")
     });
 };
 
-TEST_CASE("test komunis::map::filter")
+TEST_CASE("test ktl::map::filter")
 {
-    komunis::map<
+    ktl::map<
         std::size_t,
         std::size_t>
         map;
@@ -133,9 +133,9 @@ TEST_CASE("test komunis::map::filter")
         });
 };
 
-TEST_CASE("test komunis::map move constructor")
+TEST_CASE("test ktl::map move constructor")
 {
-    komunis::map<
+    ktl::map<
         std::size_t,
         std::size_t>
         map;
@@ -143,7 +143,7 @@ TEST_CASE("test komunis::map move constructor")
     {
         map.emplace(iter, iter);
     }
-    komunis::map<
+    ktl::map<
         std::size_t,
         std::size_t>
         vec2(std::move(map));
@@ -154,9 +154,9 @@ TEST_CASE("test komunis::map move constructor")
     CHECK(map.size() == 0);
 };
 
-TEST_CASE("test komunis::map move assignment")
+TEST_CASE("test ktl::map move assignment")
 {
-    komunis::map<
+    ktl::map<
         std::size_t,
         std::size_t>
         map;
@@ -164,7 +164,7 @@ TEST_CASE("test komunis::map move assignment")
     {
         map.emplace(iter, iter);
     }
-    komunis::map<
+    ktl::map<
         std::size_t,
         std::size_t>
         vec2 = std::move(map);

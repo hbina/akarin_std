@@ -5,7 +5,7 @@
 #include <type_traits>
 #include <vector>
 
-namespace komunis
+namespace ktl
 {
 template <std::size_t P, std::size_t Q>
 struct quotient
@@ -194,4 +194,4 @@ private:
         data.shrink_to_fit();
     };
 };
-}; // namespace komunis
+}; // namespace ktl

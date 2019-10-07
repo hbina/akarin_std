@@ -1,6 +1,6 @@
 #pragma once
 
-namespace komunis
+namespace ktl
 {
 template <
     typename T,
@@ -27,4 +27,4 @@ public:
         return member_value;
     }
 };
-}; // namespace komunis
+}; // namespace ktl

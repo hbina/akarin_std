@@ -1,6 +1,6 @@
 #pragma once
 
-namespace komunis
+namespace ktl
 {
 template <class T>
 class allocator
@@ -61,4 +61,4 @@ public:
         using other = allocator<U>;
     };
 };
-}; // namespace komunis
+}; // namespace ktl

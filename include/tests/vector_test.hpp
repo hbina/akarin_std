@@ -5,9 +5,9 @@
 
 #include <iostream>
 
-TEST_CASE("test komunis::vector::empty()")
+TEST_CASE("test ktl::vector::empty()")
 {
-    komunis::vector<
+    ktl::vector<
         std::size_t>
         vec;
     CHECK(vec.empty() == true);
@@ -15,9 +15,9 @@ TEST_CASE("test komunis::vector::empty()")
     CHECK(vec.empty() == false);
 };
 
-TEST_CASE("test komunis::vector::size()")
+TEST_CASE("test ktl::vector::size()")
 {
-    komunis::vector<
+    ktl::vector<
         std::size_t>
         vec;
     vec.push_back(1u);
@@ -28,9 +28,9 @@ TEST_CASE("test komunis::vector::size()")
     CHECK(vec.size() == 5);
 };
 
-TEST_CASE("test komunis::vector::capacity()")
+TEST_CASE("test ktl::vector::capacity()")
 {
-    komunis::vector<
+    ktl::vector<
         std::size_t>
         vec;
     for (std::size_t iter = 0; iter < 16 * 16; iter++)
@@ -38,9 +38,9 @@ TEST_CASE("test komunis::vector::capacity()")
     CHECK(vec.capacity() == 268);
 };
 
-TEST_CASE("test komunis::vector::push_back(const T&&)")
+TEST_CASE("test ktl::vector::push_back(const T&&)")
 {
-    komunis::vector<
+    ktl::vector<
         std::size_t>
         vec;
     for (std::size_t iter = 0; iter < 10; iter++)
@@ -55,9 +55,9 @@ TEST_CASE("test komunis::vector::push_back(const T&&)")
     }
 };
 
-TEST_CASE("test komunis::vector::apply_f(F f, const std::size_t)")
+TEST_CASE("test ktl::vector::apply_f(F f, const std::size_t)")
 {
-    komunis::vector<
+    ktl::vector<
         std::size_t>
         vec;
     for (std::size_t iter = 0; iter < 10; iter++)
@@ -78,9 +78,9 @@ TEST_CASE("test komunis::vector::apply_f(F f, const std::size_t)")
     }
 };
 
-TEST_CASE("test komunis::vector::for_each(const F& f)")
+TEST_CASE("test ktl::vector::for_each(const F& f)")
 {
-    komunis::vector<
+    ktl::vector<
         std::size_t>
         vec;
     for (std::size_t iter = 0; iter < 10; iter++)
@@ -97,15 +97,15 @@ TEST_CASE("test komunis::vector::for_each(const F& f)")
     });
 };
 
-TEST_CASE("test komunis::vector<komunis::vector>::for_each(const F& f)")
+TEST_CASE("test ktl::vector<ktl::vector>::for_each(const F& f)")
 {
-    komunis::vector<
-        komunis::vector<std::size_t>>
+    ktl::vector<
+        ktl::vector<std::size_t>>
         vec;
     for (std::size_t iter = 0; iter < 10; iter++)
     {
         // TODO :: Provide an easier way to initialize multidimensional vectors?
-        komunis::vector<std::size_t> t_vec;
+        ktl::vector<std::size_t> t_vec;
         for (std::size_t iter = 0; iter < 10; iter++)
         {
             t_vec.push_back(iter);
@@ -117,12 +117,12 @@ TEST_CASE("test komunis::vector<komunis::vector>::for_each(const F& f)")
         });
         vec.push_back(t_vec);
     }
-    vec.for_each([](komunis::vector<std::size_t> &p_vec) {
+    vec.for_each([](ktl::vector<std::size_t> &p_vec) {
         p_vec.for_each([](std::size_t &p_iter) {
             p_iter *= 5;
         });
     });
-    vec.for_each([](komunis::vector<std::size_t> &p_vec) {
+    vec.for_each([](ktl::vector<std::size_t> &p_vec) {
         std::size_t iter = 0;
         p_vec.for_each([&](std::size_t &p_iter) {
             CHECK(p_iter == iter * 5);
@@ -131,9 +131,9 @@ TEST_CASE("test komunis::vector<komunis::vector>::for_each(const F& f)")
     });
 };
 
-TEST_CASE("test komunis::vector::filter(const F& f)")
+TEST_CASE("test ktl::vector::filter(const F& f)")
 {
-    komunis::vector<
+    ktl::vector<
         std::size_t>
         vec;
     for (std::size_t iter = 0; iter < 10; iter++)
@@ -148,16 +148,16 @@ TEST_CASE("test komunis::vector::filter(const F& f)")
         });
 };
 
-TEST_CASE("test komunis::vector move constructor")
+TEST_CASE("test ktl::vector move constructor")
 {
-    komunis::vector<
+    ktl::vector<
         std::size_t>
         vec;
     for (std::size_t iter = 0; iter < 10; iter++)
     {
         vec.push_back(iter);
     }
-    komunis::vector<
+    ktl::vector<
         std::size_t>
         vec2(std::move(vec));
     std::size_t counter = 0;
@@ -167,16 +167,16 @@ TEST_CASE("test komunis::vector move constructor")
     CHECK(vec.size() == 0);
 };
 
-TEST_CASE("test komunis::vector move assignment")
+TEST_CASE("test ktl::vector move assignment")
 {
-    komunis::vector<
+    ktl::vector<
         std::size_t>
         vec;
     for (std::size_t iter = 0; iter < 10; iter++)
     {
         vec.push_back(iter);
     }
-    komunis::vector<
+    ktl::vector<
         std::size_t>
         vec2 = std::move(vec);
     std::size_t counter = 0;
