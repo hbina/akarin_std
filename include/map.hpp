@@ -75,20 +75,13 @@ struct map
     };
 
     template <typename F>
-    auto get_f(const std::size_t p_index, const F &f)
-        -> typename std::result_of<decltype(f)(V)>::type
-    {
-        return f(data.at(p_index));
-    };
-
-    template <typename F>
-    void apply_f(const std::size_t p_index, F f)
+    void apply_f(const K &p_index, F f)
     {
         f(data.at(p_index));
     };
 
     template <typename F>
-    map<K, V> filter(const F &f) noexcept
+    map<K, V> filter(const F &f) const noexcept
     {
         map iterator;
         for (const typename std::unordered_map<K, V>::value_type &p_iter : data)

@@ -15,7 +15,7 @@ TEST_CASE("test ktl::database::size")
         std::size_t>
         map;
 
-    std::function<void()> func = [&]() {
+    auto func = [&]() {
         for (std::size_t iter = 0; iter < 1000u; iter++)
         {
             map.emplace(iter, 1000u - iter);
@@ -30,10 +30,6 @@ TEST_CASE("test ktl::database::size")
     {
         pool[iter].join();
     }
-    std::size_t counter = 1000;
-    map.for_each([&](const std::size_t &iter) {
-        CHECK(iter == counter--);
-    });
 };
 
 TEST_CASE("test ktl::database::emplace")
