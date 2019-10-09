@@ -10,10 +10,7 @@ add_executable(
     
     src/tests/test.cpp)
 
-add_compile_options(
-  "-Wall" "-Wpedantic" "-Wextra" "-fexceptions"
-  "$<$<CONFIG:DEBUG>:-O0;-g3;-ggdb>"
-)
+SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-Wall -Wpedantic -Wextra -pthread")
 
 target_include_directories(komunis_std_test PRIVATE ${CMAKE_SOURCE_DIR}/include)
 target_include_directories(komunis_std_test PRIVATE ${CMAKE_SOURCE_DIR}/thirdparty/doctest)

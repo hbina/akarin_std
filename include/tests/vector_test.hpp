@@ -3,8 +3,6 @@
 #include "doctest/doctest.h"
 #include "vector.hpp"
 
-#include <iostream>
-
 TEST_CASE("test ktl::vector::empty()")
 {
     ktl::vector<
