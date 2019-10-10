@@ -81,15 +81,28 @@ struct vector
     }
 
     template <typename F>
-    vector<std::size_t> filter(const F &f) noexcept
+    vector<T> filter(const F &f) const noexcept
     {
         vector iterator;
+        iterator.reserve(this->size());
         for_each([&](const T &p_iter) {
             if (f(p_iter))
                 iterator.push_back(p_iter);
         });
         return iterator;
-    }
+    };
+
+    template <typename F>
+    auto map(const F &f) const noexcept
+        -> vector<typename std::result_of<decltype(f)(T)>::type>
+    {
+        vector<typename std::result_of<decltype(f)(T)>::type> iterator;
+        iterator.reserve(this->size());
+        for_each([&](const T &iter) {
+            iterator.push_back(f(iter));
+        });
+        return iterator;
+    };
 
     constexpr bool empty() const
     {
@@ -104,12 +117,17 @@ struct vector
     constexpr std::size_t size() const
     {
         return data.size();
-    }
+    };
 
     constexpr void clear() noexcept
     {
         data.clear();
-    }
+    };
+
+    void reserve(const std::size_t p_new_cap)
+    {
+        data.reserve(p_new_cap);
+    };
 
 private:
     typename std::vector<T> data;
@@ -126,11 +144,6 @@ private:
     {
         std::size_t new_size = calculate_growth(data.capacity());
         reserve(new_size);
-    };
-
-    void reserve(const std::size_t p_new_cap)
-    {
-        data.reserve(p_new_cap);
     };
 
     void shrink()

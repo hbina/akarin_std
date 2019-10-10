@@ -183,3 +183,26 @@ TEST_CASE("test ktl::vector move assignment")
     });
     CHECK(vec.size() == 0);
 };
+
+#include <string>
+#include <iostream>
+
+TEST_CASE("test ktl::vector::map to std::string")
+{
+    ktl::vector<
+        std::size_t>
+        vec;
+    for (std::size_t iter = 0; iter < 100; iter++)
+    {
+        vec.push_back(iter);
+    }
+    vec.map([](const std::size_t iter) -> std::string {
+           return std::to_string(iter);
+       })
+        .filter([](const std::string &iter) -> bool {
+            return iter.size() < 2;
+        })
+        .for_each([](const std::string &iter) {
+            CHECK(iter.size() == 1);
+        });
+};
