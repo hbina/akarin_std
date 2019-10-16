@@ -55,7 +55,6 @@ struct vector
     auto get_f(const std::size_t p_index, const F &f) const
         -> typename std::result_of<decltype(f)(T)>::type
     {
-        // TODO :: Make this a macro that prints out current file and line
         if (p_index >= data.size())
             std::terminate();
         return f(data[p_index]);
@@ -65,16 +64,14 @@ struct vector
     auto get_f(const std::size_t p_index, const F &f)
         -> typename std::result_of<decltype(f)(T)>::type
     {
-        // TODO :: Make this a macro that prints out current file and line
         if (p_index >= data.size())
             std::terminate();
         return f(data[p_index]);
     }
 
     template <typename F>
-    void apply_f(const std::size_t p_index, F f)
+    void for_one(const std::size_t p_index, F f)
     {
-        // TODO :: Make this a macro that prints out current file and line
         if (p_index > data.size())
             std::terminate();
         f(data[p_index]);

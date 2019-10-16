@@ -45,7 +45,7 @@ struct map
     };
 
     template <typename F>
-    void apply_f(const K &p_index, F f)
+    void for_one(const K &p_index, F f)
     {
         f(data.at(p_index));
     };

@@ -76,14 +76,14 @@ struct database
     };
 
     template <typename F>
-    void apply_f(const K &p_index, const F &f)
+    void for_one(const K &p_index, const F &f)
     {
         std::lock_guard<std::mutex> lock(mutex);
         f(data.at(p_index));
     };
 
     template <typename F>
-    void apply_f(const K &p_index, const F &f) const
+    void for_one(const K &p_index, const F &f) const
     {
         std::lock_guard<std::mutex> lock(mutex);
         f(data.at(p_index));

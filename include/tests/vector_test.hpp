@@ -3,7 +3,9 @@
 #include "doctest/doctest.h"
 #include "vector.hpp"
 
-TEST_CASE("test ktl::vector::empty()")
+#include <string>
+
+TEST_CASE("ktl::vector test empty()")
 {
     ktl::vector<
         std::size_t>
@@ -13,7 +15,7 @@ TEST_CASE("test ktl::vector::empty()")
     CHECK(vec.empty() == false);
 };
 
-TEST_CASE("test ktl::vector::size()")
+TEST_CASE("ktl::vector test size()")
 {
     ktl::vector<
         std::size_t>
@@ -26,7 +28,7 @@ TEST_CASE("test ktl::vector::size()")
     CHECK(vec.size() == 5);
 };
 
-TEST_CASE("test ktl::vector::capacity()")
+TEST_CASE("ktl::vector test capacity()")
 {
     ktl::vector<
         std::size_t>
@@ -36,7 +38,7 @@ TEST_CASE("test ktl::vector::capacity()")
     CHECK(vec.capacity() == 268);
 };
 
-TEST_CASE("test ktl::vector::push_back(const T&&)")
+TEST_CASE("ktl::vector get T` from some T")
 {
     ktl::vector<
         std::size_t>
@@ -47,13 +49,13 @@ TEST_CASE("test ktl::vector::push_back(const T&&)")
     }
     for (std::size_t iter = 0; iter < 10; iter++)
     {
-        CHECK(vec.get_f(iter, [](const std::size_t p_iter) {
-            return p_iter;
-        }) == iter);
+        CHECK(vec.get_f(iter, [](const std::size_t p_iter) -> std::string {
+            return std::to_string(p_iter);
+        }) == std::to_string(iter));
     }
 };
 
-TEST_CASE("test ktl::vector::apply_f(F f, const std::size_t)")
+TEST_CASE("ktl::vector test ")
 {
     ktl::vector<
         std::size_t>
@@ -64,7 +66,7 @@ TEST_CASE("test ktl::vector::apply_f(F f, const std::size_t)")
     }
     for (std::size_t iter = 0; iter < 10; iter++)
     {
-        vec.apply_f(iter, [](std::size_t &p_iter) -> void {
+        vec.for_one(iter, [](std::size_t &p_iter) -> void {
             p_iter *= 2;
         });
     }
@@ -95,7 +97,7 @@ TEST_CASE("test ktl::vector::for_each(const F& f)")
     });
 };
 
-TEST_CASE("test ktl::vector<ktl::vector>::for_each(const F& f)")
+TEST_CASE("ktl::vector test 2 dimensional vectors")
 {
     ktl::vector<
         ktl::vector<std::size_t>>
@@ -129,7 +131,7 @@ TEST_CASE("test ktl::vector<ktl::vector>::for_each(const F& f)")
     });
 };
 
-TEST_CASE("test ktl::vector::filter(const F& f)")
+TEST_CASE("ktl::vector filtering functions")
 {
     ktl::vector<
         std::size_t>
@@ -146,7 +148,7 @@ TEST_CASE("test ktl::vector::filter(const F& f)")
         });
 };
 
-TEST_CASE("test ktl::vector move constructor")
+TEST_CASE("ktl::vector test move constructor")
 {
     ktl::vector<
         std::size_t>
@@ -165,7 +167,7 @@ TEST_CASE("test ktl::vector move constructor")
     CHECK(vec.size() == 0);
 };
 
-TEST_CASE("test ktl::vector move assignment")
+TEST_CASE("ktl::vector test move assignment")
 {
     ktl::vector<
         std::size_t>
@@ -184,10 +186,7 @@ TEST_CASE("test ktl::vector move assignment")
     CHECK(vec.size() == 0);
 };
 
-#include <string>
-#include <iostream>
-
-TEST_CASE("test ktl::vector::map to std::string")
+TEST_CASE("ktl::vector test chaining lambdas")
 {
     ktl::vector<
         std::size_t>

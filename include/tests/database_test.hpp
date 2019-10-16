@@ -50,7 +50,7 @@ TEST_CASE("test ktl::database::emplace")
     }
 };
 
-TEST_CASE("test ktl::database::apply_f")
+TEST_CASE("test ktl::database::for_one")
 {
     ktl::database<
         std::size_t,
@@ -62,7 +62,7 @@ TEST_CASE("test ktl::database::apply_f")
     }
     for (std::size_t iter = 0; iter < 10; iter++)
     {
-        map.apply_f(iter, [](std::size_t &p_iter) -> void {
+        map.for_one(iter, [](std::size_t &p_iter) -> void {
             p_iter *= 2;
         });
     }
