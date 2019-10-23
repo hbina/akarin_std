@@ -13,7 +13,7 @@ TEST_CASE("ktl::vector test empty()")
     CHECK(vec.empty() == true);
     vec.push_back(1u);
     CHECK(vec.empty() == false);
-};
+}
 
 TEST_CASE("ktl::vector test size()")
 {
@@ -26,7 +26,7 @@ TEST_CASE("ktl::vector test size()")
     vec.push_back(1u);
     vec.push_back(1u);
     CHECK(vec.size() == 5);
-};
+}
 
 TEST_CASE("ktl::vector test capacity()")
 {
@@ -36,7 +36,7 @@ TEST_CASE("ktl::vector test capacity()")
     for (std::size_t iter = 0; iter < 16 * 16; iter++)
         vec.push_back(1u);
     CHECK(vec.capacity() == 268);
-};
+}
 
 TEST_CASE("ktl::vector get T` from some T")
 {
@@ -53,7 +53,7 @@ TEST_CASE("ktl::vector get T` from some T")
             return std::to_string(p_iter);
         }) == std::to_string(iter));
     }
-};
+}
 
 TEST_CASE("ktl::vector test ")
 {
@@ -76,7 +76,7 @@ TEST_CASE("ktl::vector test ")
             return p_iter;
         }) == iter * 2);
     }
-};
+}
 
 TEST_CASE("test ktl::vector::for_each(const F& f)")
 {
@@ -95,7 +95,7 @@ TEST_CASE("test ktl::vector::for_each(const F& f)")
         CHECK(p_iter == iter * 2);
         iter++;
     });
-};
+}
 
 TEST_CASE("ktl::vector test 2 dimensional vectors")
 {
@@ -129,7 +129,7 @@ TEST_CASE("ktl::vector test 2 dimensional vectors")
             iter++;
         });
     });
-};
+}
 
 TEST_CASE("ktl::vector filtering functions")
 {
@@ -146,7 +146,7 @@ TEST_CASE("ktl::vector filtering functions")
         .for_each([](const std::size_t p_iter) {
             CHECK(p_iter % 2);
         });
-};
+}
 
 TEST_CASE("ktl::vector test move constructor")
 {
@@ -165,7 +165,7 @@ TEST_CASE("ktl::vector test move constructor")
         CHECK(p_iter == counter++);
     });
     CHECK(vec.size() == 0);
-};
+}
 
 TEST_CASE("ktl::vector test move assignment")
 {
@@ -184,7 +184,7 @@ TEST_CASE("ktl::vector test move assignment")
         CHECK(p_iter == counter++);
     });
     CHECK(vec.size() == 0);
-};
+}
 
 TEST_CASE("ktl::vector test chaining lambdas")
 {
@@ -204,4 +204,4 @@ TEST_CASE("ktl::vector test chaining lambdas")
         .for_each([](const std::string &iter) {
             CHECK(iter.size() == 1);
         });
-};
+}

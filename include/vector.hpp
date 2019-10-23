@@ -27,14 +27,14 @@ struct vector
         if (data.size() == data.capacity())
             grow();
         data.push_back(args...);
-    };
+    }
 
     void push_back(const T &t)
     {
         if (data.size() == data.capacity())
             grow();
         data.push_back(t);
-    };
+    }
 
     template <typename F>
     void for_each(const F &f)
@@ -87,7 +87,7 @@ struct vector
                 iterator.push_back(p_iter);
         });
         return iterator;
-    };
+    }
 
     template <typename F>
     auto map(const F &f) const noexcept
@@ -99,32 +99,32 @@ struct vector
             iterator.push_back(f(iter));
         });
         return iterator;
-    };
+    }
 
     constexpr bool empty() const
     {
         return data.empty();
-    };
+    }
 
     constexpr std::size_t capacity() const
     {
         return data.capacity();
-    };
+    }
 
     constexpr std::size_t size() const
     {
         return data.size();
-    };
+    }
 
     constexpr void clear() noexcept
     {
         data.clear();
-    };
+    }
 
     void reserve(const std::size_t p_new_cap)
     {
         data.reserve(p_new_cap);
-    };
+    }
 
 private:
     typename std::vector<T> data;
@@ -135,17 +135,17 @@ private:
         return static_cast<std::size_t>(
                    static_cast<double>(p_cap) * growth_rate) +
                N;
-    };
+    }
 
     void grow()
     {
         std::size_t new_size = calculate_growth(data.capacity());
         reserve(new_size);
-    };
+    }
 
     void shrink()
     {
         data.shrink_to_fit();
-    };
+    }
 };
-}; // namespace ktl
+} // namespace ktl

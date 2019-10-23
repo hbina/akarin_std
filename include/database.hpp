@@ -14,12 +14,12 @@ struct database
     {
         this->clear();
         data = p_vec.data;
-    };
+    }
 
     constexpr database(database &&p_vec)
     {
         data = std::move(p_vec.data);
-    };
+    }
 
     database &operator=(const database &p_vec)
     {
@@ -28,7 +28,7 @@ struct database
         this->clear();
         data = p_vec.data;
         return *this;
-    };
+    }
 
     database &operator=(database &&p_vec)
     {
@@ -36,14 +36,14 @@ struct database
             return *this; // no need to copy
         data = std::move(p_vec.data);
         return *this;
-    };
+    }
 
     template <typename... Args>
     void emplace(Args &&... args)
     {
         std::lock_guard<std::mutex> lock(mutex);
         data.emplace(args...);
-    };
+    }
 
     template <typename F>
     void for_each(const F &f)
@@ -53,7 +53,7 @@ struct database
         {
             f(iter.second);
         }
-    };
+    }
 
     template <typename F>
     void for_each(const F &f) const
@@ -65,7 +65,7 @@ struct database
             [&](const typename std::unordered_map<K, V>::value_type &iter) {
                 f(iter.second);
             });
-    };
+    }
 
     template <typename F>
     auto get_f(const K &p_index, const F &f) const noexcept
@@ -73,21 +73,21 @@ struct database
     {
         std::lock_guard<std::mutex> lock(mutex);
         return f(data.at(p_index));
-    };
+    }
 
     template <typename F>
     void for_one(const K &p_index, const F &f)
     {
         std::lock_guard<std::mutex> lock(mutex);
         f(data.at(p_index));
-    };
+    }
 
     template <typename F>
     void for_one(const K &p_index, const F &f) const
     {
         std::lock_guard<std::mutex> lock(mutex);
         f(data.at(p_index));
-    };
+    }
 
     template <typename F>
     database<K, V> filter(const F &f) const noexcept
@@ -98,36 +98,36 @@ struct database
         {
             if (f(p_iter.second))
                 iterator.emplace(p_iter.first, p_iter.second);
-        };
+        }
         return iterator;
-    };
+    }
 
     V operator[](const K &key) const noexcept
     {
         std::lock_guard<std::mutex> lock(mutex);
         return data.at(key);
-    };
+    }
 
     bool empty() const
     {
         std::lock_guard<std::mutex> lock(mutex);
         return data.empty();
-    };
+    }
 
     std::size_t size() const
     {
         std::lock_guard<std::mutex> lock(mutex);
         return data.size();
-    };
+    }
 
     void clear() noexcept
     {
         std::lock_guard<std::mutex> lock(mutex);
         data.clear();
-    };
+    }
 
 private:
     mutable std::mutex mutex;
     typename std::unordered_map<K, V> data;
 };
-}; // namespace ktl
+} // namespace ktl

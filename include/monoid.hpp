@@ -27,4 +27,4 @@ public:
         return member_value;
     }
 };
-}; // namespace ktl
+} // namespace ktl

@@ -15,7 +15,7 @@ struct map
     void emplace(Args &&... args)
     {
         data.emplace(args...);
-    };
+    }
 
     template <typename F>
     void for_each(const F &f)
@@ -24,7 +24,7 @@ struct map
         {
             f(iter.second);
         }
-    };
+    }
 
     template <typename F>
     void for_each(const F &f) const
@@ -35,20 +35,20 @@ struct map
             [&](const typename std::unordered_map<K, V>::value_type &iter) {
                 f(iter.second);
             });
-    };
+    }
 
     template <typename F>
     auto get_f(const K &p_index, const F &f) const
         -> typename std::result_of<decltype(f)(V)>::type
     {
         return f(data.at(p_index));
-    };
+    }
 
     template <typename F>
     void for_one(const K &p_index, F f)
     {
         f(data.at(p_index));
-    };
+    }
 
     template <typename F>
     map<K, V> filter(const F &f) const noexcept
@@ -58,9 +58,9 @@ struct map
         {
             if (f(p_iter.second))
                 iterator.emplace(p_iter.first, p_iter.second);
-        };
+        }
         return iterator;
-    };
+    }
 
     V operator[](const K &key) const noexcept
     {
@@ -70,7 +70,7 @@ struct map
     constexpr bool empty() const
     {
         return data.empty();
-    };
+    }
 
     constexpr std::size_t size() const
     {
@@ -85,4 +85,4 @@ struct map
 private:
     typename std::unordered_map<K, V> data;
 };
-}; // namespace ktl
+} // namespace ktl

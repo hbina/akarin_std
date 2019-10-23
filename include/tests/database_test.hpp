@@ -21,6 +21,7 @@ TEST_CASE("test ktl::database::size")
             map.emplace(iter, 1000u - iter);
         }
     };
+    
     std::vector<std::thread> pool;
     for (std::size_t iter = 0; iter < 8; iter++)
     {
@@ -30,7 +31,7 @@ TEST_CASE("test ktl::database::size")
     {
         pool[iter].join();
     }
-};
+}
 
 TEST_CASE("test ktl::database::emplace")
 {
@@ -48,7 +49,7 @@ TEST_CASE("test ktl::database::emplace")
             return p_iter;
         }) == iter);
     }
-};
+}
 
 TEST_CASE("test ktl::database::for_one")
 {
@@ -72,7 +73,7 @@ TEST_CASE("test ktl::database::for_one")
             return p_iter;
         }) == iter * 2);
     }
-};
+}
 
 TEST_CASE("test ktl::database::for_each(const F& f)")
 {
@@ -90,8 +91,8 @@ TEST_CASE("test ktl::database::for_each(const F& f)")
     for (std::size_t iter = 0; iter < 10; iter++)
     {
         CHECK(map[iter] == iter * 2);
-    };
-};
+    }
+}
 
 TEST_CASE("test ktl::database<ktl::database>::for_each(const F& f)")
 {
@@ -112,7 +113,7 @@ TEST_CASE("test ktl::database<ktl::database>::for_each(const F& f)")
         for (std::size_t iter = 0; iter < 10; iter++)
         {
             CHECK(t_map[iter] == iter);
-        };
+        }
         map.emplace(iter, t_map);
     }
     map.for_each([](ktl::database<std::size_t, size_t> &p_vec) {
@@ -124,9 +125,9 @@ TEST_CASE("test ktl::database<ktl::database>::for_each(const F& f)")
         for (std::size_t iter = 0; iter < 10; iter++)
         {
             CHECK(p_vec[iter] == iter * 5);
-        };
+        }
     });
-};
+}
 
 TEST_CASE("test ktl::database::filter")
 {
@@ -144,7 +145,7 @@ TEST_CASE("test ktl::database::filter")
         .for_each([](const std::size_t p_iter) {
             CHECK(p_iter % 2);
         });
-};
+}
 
 TEST_CASE("test ktl::database move constructor")
 {
@@ -163,9 +164,9 @@ TEST_CASE("test ktl::database move constructor")
     for (std::size_t iter = 0; iter < 10; iter++)
     {
         CHECK(vec2[iter] == iter);
-    };
+    }
     CHECK(map.size() == 0);
-};
+}
 
 TEST_CASE("test ktl::database move assignment")
 {
@@ -184,6 +185,6 @@ TEST_CASE("test ktl::database move assignment")
     for (std::size_t iter = 0; iter < 10; iter++)
     {
         CHECK(vec2[iter] == iter);
-    };
+    }
     CHECK(map.size() == 0);
-};
+}

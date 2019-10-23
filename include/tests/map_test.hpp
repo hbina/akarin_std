@@ -17,7 +17,7 @@ TEST_CASE("test ktl::map::size")
     map.emplace(4u, 1u);
     map.emplace(5u, 1u);
     CHECK(map.size() == 5);
-};
+}
 
 TEST_CASE("test ktl::map::emplace")
 {
@@ -35,7 +35,7 @@ TEST_CASE("test ktl::map::emplace")
             return p_iter;
         }) == iter);
     }
-};
+}
 
 TEST_CASE("test ktl::map::for_one")
 {
@@ -59,7 +59,7 @@ TEST_CASE("test ktl::map::for_one")
             return p_iter;
         }) == iter * 2);
     }
-};
+}
 
 TEST_CASE("test ktl::map::for_each(const F& f)")
 {
@@ -77,8 +77,8 @@ TEST_CASE("test ktl::map::for_each(const F& f)")
     for (std::size_t iter = 0; iter < 10; iter++)
     {
         CHECK(map[iter] == iter * 2);
-    };
-};
+    }
+}
 
 TEST_CASE("test ktl::map<ktl::map>::for_each(const F& f)")
 {
@@ -99,7 +99,7 @@ TEST_CASE("test ktl::map<ktl::map>::for_each(const F& f)")
         for (std::size_t iter = 0; iter < 10; iter++)
         {
             CHECK(t_map[iter] == iter);
-        };
+        }
         map.emplace(iter, t_map);
     }
     map.for_each([](ktl::map<std::size_t, size_t> &p_vec) {
@@ -111,9 +111,9 @@ TEST_CASE("test ktl::map<ktl::map>::for_each(const F& f)")
         for (std::size_t iter = 0; iter < 10; iter++)
         {
             CHECK(p_vec[iter] == iter * 5);
-        };
+        }
     });
-};
+}
 
 TEST_CASE("test ktl::map::filter")
 {
@@ -131,7 +131,7 @@ TEST_CASE("test ktl::map::filter")
         .for_each([](const std::size_t p_iter) {
             CHECK(p_iter % 2);
         });
-};
+}
 
 TEST_CASE("test ktl::map move constructor")
 {
@@ -150,9 +150,9 @@ TEST_CASE("test ktl::map move constructor")
     for (std::size_t iter = 0; iter < 10; iter++)
     {
         CHECK(vec2[iter] == iter);
-    };
+    }
     CHECK(map.size() == 0);
-};
+}
 
 TEST_CASE("test ktl::map move assignment")
 {
@@ -171,6 +171,6 @@ TEST_CASE("test ktl::map move assignment")
     for (std::size_t iter = 0; iter < 10; iter++)
     {
         CHECK(vec2[iter] == iter);
-    };
+    }
     CHECK(map.size() == 0);
-};
+}
